@@ -42,7 +42,12 @@ import javax.servlet.http.HttpServletResponse;
 	    	 ((HttpServletResponse)response).sendRedirect(finalUrl);
 	    	  
 	      }
-	      chain.doFilter(request, response);
+	      HttpServletResponse httpResponse = (HttpServletResponse) response;
+	      HttpServletRequest httpRequest= (HttpServletRequest) request;
+	      httpResponse.setHeader("Access-Control-Allow-Origin", httpRequest.getHeader("Origin"));
+	      httpResponse.setHeader("Access-Control-Allow-Headers", "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With");
+	      System.out.println("origin added :---"+httpRequest.getHeader("Origin"));
+	      chain.doFilter(httpRequest, httpResponse);
 	  
 		
 	}
